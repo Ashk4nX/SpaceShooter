@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[System.Serializable] // We should write this if we want our class variables to be visible in the editor
 public class Boundary {
 
 	public float maxX, minX, maxZ, minZ;
@@ -12,12 +12,15 @@ public class Boundary {
 public class PlayerController : MonoBehaviour {
 
 	private Rigidbody body;
+	private float NextFire;
 	private GameObject NewBolt;
+	private AudioSource Audio;
 
 	public float Speed;
 	public float tilt;
+	public float FireRate;
 	public Boundary boundary;
-	public GameObject SpawnPoint;
+	public Transform SpawnPoint;
 	public GameObject Bolt;
 
 
@@ -26,6 +29,7 @@ public class PlayerController : MonoBehaviour {
 	{
 
 		body = gameObject.GetComponent<Rigidbody>();
+		Audio = gameObject.GetComponent<AudioSource> ();
 		
 	}
 
@@ -36,7 +40,7 @@ public class PlayerController : MonoBehaviour {
 
 	}
 	
-	void FixedUpdate () 
+	void FixedUpdate () //If we have a physical object, we should put it's behaviour in FixedUpdate
 	{
 
 		float moveHorizontal = Input.GetAxis("Horizontal");
@@ -58,9 +62,13 @@ public class PlayerController : MonoBehaviour {
 	void FireBolt ()
 	{
 
-		if (Input.GetMouseButtonDown(0)) {
+		if (Input.GetMouseButton(0) && Time.time > NextFire) {
 
-			NewBolt = Instantiate (Bolt, SpawnPoint.transform.position, SpawnPoint.transform.rotation) as GameObject;	
+			Audio.Play ();
+
+			NextFire = Time.time + FireRate;
+
+			NewBolt = Instantiate (Bolt, SpawnPoint.position, SpawnPoint.rotation);
 
 		}
 
