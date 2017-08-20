@@ -43,6 +43,7 @@ public class Destroy : MonoBehaviour {
 		if (thing.tag == "Player") {
 		
 			Instantiate (PlayerExplosion, thing.transform.position, thing.transform.rotation);
+			gamecontroller.RestartLevel ();
 		
 		}
 
