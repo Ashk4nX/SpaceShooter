@@ -6,6 +6,28 @@ public class Destroy : MonoBehaviour {
 
 	public GameObject Explosion;
 	public GameObject PlayerExplosion;
+	public int Score;
+
+	private GameController gamecontroller;
+	private GameObject GameControllerObject;
+
+	void Start ()
+	{
+		GameControllerObject = GameObject.FindWithTag ("GameController");
+
+		if (GameControllerObject != null) {
+		
+			gamecontroller = GameControllerObject.GetComponent<GameController> ();
+		
+		}
+
+		if (GameControllerObject == null) {
+		
+			Debug.Log ("Cannot Find the Game Controller");
+		
+		}
+
+	}
 
 	void OnTriggerEnter (Collider thing){
 	
@@ -16,6 +38,7 @@ public class Destroy : MonoBehaviour {
 		}
 
 		Instantiate (Explosion, transform.position, transform.rotation);
+		gamecontroller.AddScore (Score);
 
 		if (thing.tag == "Player") {
 		
