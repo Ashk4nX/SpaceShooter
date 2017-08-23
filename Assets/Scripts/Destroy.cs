@@ -37,6 +37,12 @@ public class Destroy : MonoBehaviour {
 		
 		}
 
+		if (thing.tag == "Asteroids") {
+		
+			return;
+		
+		}
+
 		Instantiate (Explosion, transform.position, transform.rotation);
 		gamecontroller.AddScore (Score);
 

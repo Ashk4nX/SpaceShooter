@@ -5,7 +5,7 @@ using UnityEditor.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
-	public GameObject Hazard;
+	public GameObject[] Hazards;
 	public Vector3 SpawnValue;
 	public GUIText ScoreText;
 	public GUIText RestartText;
@@ -39,10 +39,12 @@ public class GameController : MonoBehaviour {
 		while (true) {
 			yield return new WaitForSeconds (StartWait);
 			for (int i = 0; i < WaveCount; i++) {
-				
+
+				GameObject Hazard = Hazards [(Random.Range (0, Hazards.Length))]; 
 				Vector3 SpawnPosition = new Vector3 (Random.Range (-SpawnValue.x, SpawnValue.x), SpawnValue.y, SpawnValue.z);
 				Quaternion SpawnRotation = Quaternion.identity;
 				Instantiate (Hazard, SpawnPosition, SpawnRotation);
+				SpawnWait = Random.Range (0f, 1f);
 				yield return new WaitForSeconds (SpawnWait);
 			
 			}
